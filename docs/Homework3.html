@@ -282,33 +282,49 @@ REPLACE: \2 \1 (\3)</code></pre>
 characters after second comma. It replaces it with the second word first
 (without commas), first word second, then places all characters from
 third capture in parentheses.</p>
-<p>Q3: find: (p3 replace: \1This expression captures .mp3 at every
-instance and replaces it with a line break.</p>
-<p>Q4: find: ()+(.*)(.mp3) replace: \2_\1\3 This expression captures the
-first digits, the spaces, and anything that comes after, except for the
-.mp3 which is captured afterwards. It replaces is so that the 2nd
-capture comes first, 1st capture comes second (after an underscore), and
-the .mp3 comes last.</p>
-<p>Q5: find: ()+,(+,).+,() replace: \1_\2\3 This expression capture the
-first letter, word after first comma, and last number, then removes the
-characters that are not captured.</p>
-<p>Q6: find: ()+,()+.+,() replace: \1_\2,\3 This expression captures the
-first letter, first four characters of the text after the first comma,
-and the last digits after the last comma. It replaces by removing all
-non-captured text and adding an underscore between the 1st and 2nd
-captured text.</p>
-<p>Q7: find: ()+,()+,(.+),() replace: \1\2, \4, \3 This expression
-captures the first three letters of first word, first 3 letters of
-second word, first number after comma, and second number after comma
-then replaces by removing all non-captured text and rearranging so 1 and
-2 are fused and the second number comes first with commas in between
-numbers.</p>
-<p>Q8: find: [^a-zA-Z0-9,/.\s] replace: This expression finds all
-special characters besides / . , and replaces them with nothing. find:
-(^(?:[^,]<em>,){8}(?:[^,]</em>))()(.*) replace: \1\3 This expression
-captures everything up to 8 commas in a line and the column of interest.
-It captures the extra space, then everything else in the line and
-replaces just the 1st capture and 3rd capture to remove the spaces.</p>
+<p>Question 3:</p>
+<pre><code>FIND: (\b\.mp3 \b) 
+REPLACE: \1\n </code></pre>
+<p>This expression captures .mp3 at every instance and replaces it with
+a line break.</p>
+<p>Question 4:</p>
+<pre><code>FIND: (\d+)\s+(.*)(\.mp3) 
+REPLACE: \2_\1\3</code></pre>
+<p>This expression captures the first digits, the spaces, and anything
+that comes after, except for the .mp3 which is captured afterwards. It
+replaces is so that the 2nd capture comes first, 1st capture comes
+second (after an underscore), and the .mp3 comes last.</p>
+<p>Question 5:</p>
+<pre><code>FIND: (\w)\w+,(\w+,)\d+.+,(\d+) 
+REPLACE: \1_\2\3</code></pre>
+<p>This expression capture the first letter, word after first comma, and
+last number, then removes the characters that are not captured.</p>
+<p>Question 6:</p>
+<pre><code>FIND: (\w)\w+,(\w{4})\w+.+,(\d+) 
+REPLACE: \1_\2\,\3</code></pre>
+<p>This expression captures the first letter, first four characters of
+the text after the first comma, and the last digits after the last
+comma. It replaces by removing all non-captured text and adding an
+underscore between the 1st and 2nd captured text.</p>
+<p>Question 7:</p>
+<pre><code>FIND: (\w{3})\w+,(\w{3})\w+,(\d+.+),(\d+) 
+REPLACE: \1\2, \4, \3</code></pre>
+<p>This expression captures the first three letters of first word, first
+3 letters of second word, first number after comma, and second number
+after comma then replaces by removing all non-captured text and
+rearranging so 1 and 2 are fused and the second number comes first with
+commas in between numbers.</p>
+<p>Question 8:</p>
+<pre><code>FIND: [^a-zA-Z0-9,/.\s] 
+REPLACE:    </code></pre>
+<p>This expression finds all special characters besides / . , and
+replaces them with nothing.</p>
+<pre><code>FIND: (^(?:[^,]*,){8}(?:[^,]*))(\s)(.*) 
+REPLACE: \1\3 </code></pre>
+<p>This expression captures everything up to 8 commas in a line and the
+column of interest. It captures the extra space, then everything else in
+the line and replaces just the 1st capture and 3rd capture to remove the
+spaces.</p>
 
 
 
