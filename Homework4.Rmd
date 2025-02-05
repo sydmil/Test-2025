@@ -1,0 +1,99 @@
+---
+title: "Homework 4"
+output: html_document
+date: '2025-02-05'
+---
+
+Question 1:
+```{r}
+
+
+x <- 1.1
+a <- 2.2 
+b <- 3.3  
+
+#a.
+z <- x^(a^b)
+
+#b.
+z <- (x^a)^b
+
+#c.
+z <- 3*x^3 + 2*x^2 + 1
+
+
+```
+
+
+Question 2:
+```{r}
+
+
+#a.
+vecA <-  c(seq(1, 8), rev(seq(1, 7)))
+
+#b.
+vecB <- rep(1:5, times = 1:5)
+
+#c.
+vecC <-  c(rep(5, 1), rep(4, 2), rep(3, 3), rep(2, 4), rep(1, 5))
+
+
+```
+
+
+Question 3:
+```{r}
+
+
+x <- runif(1)
+y <- runif(1)
+yx <- y/x
+
+r <- sqrt(x^2 + y^2) 
+theta <- atan(yx)
+
+
+
+```
+
+
+Question 4:
+```{r}
+
+queue <- c("sheep", "fox", "owl", "ant")
+
+#a.
+queue[5] = "serpent"
+
+#b.
+queue <- queue[-c(1)]
+
+#c.
+queue <- c("donkey", queue)
+
+#d.
+queue <- queue[-c(5)]
+
+#e.
+queue <- queue[-c(3)]
+
+#f.
+queue <- c(queue[1:2], "aphid", queue[3])
+
+#g.
+which(queue == "aphid")
+
+```
+
+
+Question 5:
+```{r}
+
+
+numbers <- c(1:100)
+
+# Filter numbers that are not divisible by 2, 3, or 7
+filtered_numbers <- numbers[!(numbers %% 2 == 0 | numbers %% 3 == 0 | numbers %% 7 == 0)]
+
+```

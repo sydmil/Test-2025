@@ -10,9 +10,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-Q1: find: \s{2,} replace: , This expression finds anywhere where its more than two spaces and replaces with a comma.
+Question 1: 
+```
+FIND: \s{2,} 
+REPLACE: ,
+```
+This expression finds anywhere where its more than two spaces and replaces with a comma.
 
-Q2: find: (\b\w+),\s*(\b\w+),\s*(.*) replace: \2 \1 (\3) This expression captures the first word, second word, and any characters after second comma. It replaces it with the second word first (without commas), first word second, then places all characters from third capture in parentheses. 
+
+Question 2: 
+```
+FIND: (\b\w+),\s*(\b\w+),\s*(.*) 
+REPLACE: \2 \1 (\3)
+```
+This expression captures the first word, second word, and any characters after second comma. It replaces it with the second word first (without commas), first word second, then places all characters from third capture in parentheses. 
 
 Q3: find: (\b\.mp3 \b) replace: \1\n This expression captures .mp3 at every instance and replaces it with a line break.
 
