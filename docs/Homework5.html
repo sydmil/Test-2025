@@ -9,11 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Sydney Miller" />
 
-<meta name="date" content="2025-01-22" />
+<meta name="date" content="2025-02-12" />
 
-<title>Homework_links</title>
+<title>Homework5</title>
 
 <script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -265,17 +264,91 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Homework_links</h1>
-<h4 class="author">Sydney Miller</h4>
-<h4 class="date">2025-01-22</h4>
+<h1 class="title toc-ignore">Homework5</h1>
+<h4 class="date">2025-02-12</h4>
 
 </div>
 
 
-<p>Week 1 Homework [HW1 Link] (HW1.html)</p>
-<p>Week 3 Homework <a href="Homework3.html">HW3 Link</a></p>
-<p>Week 4 Homework <a href="Homework4.html">HW4 Link</a></p>
-<p>Week 5 Homework <a href="Homework5.html">HW5 Link</a></p>
+<p>Question 1:</p>
+<pre class="r"><code>n_dims &lt;- runif(1, 3, 10)
+
+vec &lt;- c(1:(n_dims^2))
+
+samp &lt;- sample(vec)
+
+m &lt;- matrix(samp, nrow = n_dims, ncol = n_dims)</code></pre>
+<pre><code>## Warning in matrix(samp, nrow = n_dims, ncol = n_dims): data length [58] is not a
+## sub-multiple or multiple of the number of rows [7]</code></pre>
+<pre class="r"><code>print(m)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]   13   46   20   22   47   37   51
+## [2,]    4   24   32   57   43   38    2
+## [3,]   10   29   35   30   54    9   23
+## [4,]    8   45   14   42   40   44   11
+## [5,]   41   18    7   36    3   19   16
+## [6,]   21   48   39   26   15   52   53
+## [7,]   34   25   56   49   31    5   50</code></pre>
+<pre class="r"><code>trans_m &lt;- t(m)
+print(trans_m)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]   13    4   10    8   41   21   34
+## [2,]   46   24   29   45   18   48   25
+## [3,]   20   32   35   14    7   39   56
+## [4,]   22   57   30   42   36   26   49
+## [5,]   47   43   54   40    3   15   31
+## [6,]   37   38    9   44   19   52    5
+## [7,]   51    2   23   11   16   53   50</code></pre>
+<pre class="r"><code>sum(trans_m[1,])</code></pre>
+<pre><code>## [1] 131</code></pre>
+<pre class="r"><code>mean(trans_m[1,])</code></pre>
+<pre><code>## [1] 18.71429</code></pre>
+<pre class="r"><code>sum(trans_m[n_dims,])</code></pre>
+<pre><code>## [1] 206</code></pre>
+<pre class="r"><code>mean(trans_m[n_dims,])</code></pre>
+<pre><code>## [1] 29.42857</code></pre>
+<pre class="r"><code>eigen &lt;- eigen(trans_m)
+
+typeof(eigen)</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<p>Question 2:</p>
+<pre class="r"><code>r_num &lt;- runif(16)
+my_matrix &lt;- matrix(r_num, 4, 4)
+
+r_num2 &lt;- runif(100)
+my_logical &lt;- r_num2&lt;50
+
+my_letters &lt;- sample(letters, length(letters))
+print(my_letters)</code></pre>
+<pre><code>##  [1] &quot;i&quot; &quot;h&quot; &quot;k&quot; &quot;a&quot; &quot;w&quot; &quot;x&quot; &quot;j&quot; &quot;q&quot; &quot;d&quot; &quot;y&quot; &quot;e&quot; &quot;r&quot; &quot;p&quot; &quot;m&quot; &quot;n&quot; &quot;g&quot; &quot;f&quot; &quot;t&quot; &quot;s&quot;
+## [20] &quot;u&quot; &quot;c&quot; &quot;z&quot; &quot;b&quot; &quot;l&quot; &quot;v&quot; &quot;o&quot;</code></pre>
+<pre class="r"><code>my_list &lt;- list(my_matrix,my_logical, my_letters)
+
+my_list2 &lt;- list(my_matrix[2,2], my_logical[2], my_letters[2])
+
+sapply(my_list2, typeof)</code></pre>
+<pre><code>## [1] &quot;double&quot;    &quot;logical&quot;   &quot;character&quot;</code></pre>
+<pre class="r"><code>vec2 &lt;- c(my_matrix[2,2], my_logical[2], my_letters[2])
+typeof(vec2)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<p>Question 3:</p>
+<pre class="r"><code>my_unis &lt;- runif(26, 0, 10)
+my_letters &lt;- sample(LETTERS, length(LETTERS))
+
+df &lt;- data.frame(my_unis,my_letters)
+
+#for the first variable, use a single line of code in R to select 4 random rows and replace the numerical values in those rows with NA.
+df[sample(nrow(df), 4), &quot;my_unis&quot;] &lt;- NA
+
+#for the first variable, write a single line of R code to identify which rows have the missing values.
+which(!complete.cases(df$my_unis))</code></pre>
+<pre><code>## [1]  9 10 16 21</code></pre>
+<pre class="r"><code>#re-order the entire data frame to arrange the second variable in alphabetical order          
+df &lt;- df[order(df$my_letters), ]
+
+#calculate the column mean for the first variable
+mean(df$my_unis, na.rm = T)</code></pre>
+<pre><code>## [1] 4.07405</code></pre>
 
 
 
