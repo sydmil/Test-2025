@@ -1,0 +1,146 @@
+---
+title: "Homework6"
+output: html_document
+date: '2025-02-19'
+---
+
+Question 1-3 
+
+We are using a data set collected from an annual survey provided to the Vermont Beekeepers Association to better understand the social demographic of the organization and member satisfaction with aspects of the organization. We aim to better support minority demographics by understanding the satisfaction rating among these groups.
+
+```{r}
+ds <- read.csv("Annual Survey Results - 2025 Winter meeting.csv")
+
+head(ds)
+
+
+```
+
+
+Question 4 & 5: Analyzing the data multiple times/ Graphing the data
+
+Instead of changing parameters, we analyzed several questions using different aspects of the data set.
+
+```{r}
+
+library(ggplot2)
+
+
+ggplot(data = ds, aes(x = factor(Mentorship_program), fill = Gender)) +
+  geom_bar(position = "dodge")
+
+
+
+```
+
+We used chi-squared tests to calculate the significance of our categorical data.
+
+1) Are the proportion of women that are unsatisfied with the mentorship program significantly different from men?
+
+```{r}
+
+# Create a new column that indicates whether a person is unsatisfied or not
+ds$Mentorship_programClean <- ifelse(ds$Mentorship_program %in% c("Unsatisfied", "Very Unsatisfied", "Neutral"),  "Unsatisfied", "Satisfied")
+
+# Create a contingency table for gender vs unsatisfaction status
+contingency_table <- table(ds$Gender, ds$Mentorship_programClean)
+
+# Perform the Chi-squared test
+chi_squared_test <- chisq.test(contingency_table)
+
+# Print the results of the test
+print(chi_squared_test)
+
+# Get the standardized residuals
+standardized_residuals <- chi_squared_test$stdres
+
+#Priint residuals
+print(standardized_residuals)
+
+
+print(contingency_table)
+
+```
+
+2) Are beekeepers with more years of beekeeping experience more likely to be satisfied with networking activities?
+
+```{r}
+
+# Create a new column that indicates whether a person is unsatisfied or not
+ds$Networking_opportunitiesClean <- ifelse(ds$Networking_opportunities %in% c("Unsatisfied", "Very Unsatisfied", "Neutral"),  "Unsatisfied", "Satisfied")
+
+# Create a contingency table for gender vs unsatisfaction status
+contingency_table2 <- table(ds$Beekeeping_experience, ds$Networking_opportunitiesClean)
+
+print(contingency_table2)
+
+# Perform the Chi-squared test
+chi_squared_test2 <- chisq.test(contingency_table2)
+
+
+# Print the results of the test
+print(chi_squared_test2)
+
+# Get the standardized residuals
+standardized_residuals2 <- chi_squared_test2$stdres
+
+#Priint residuals
+print(standardized_residuals2)
+
+
+
+```
+
+
+Question 6-9: For loops
+
+```{r}
+library(dplyr)
+
+# list to store results
+proportion_results <- list()
+
+# Loop through each gender
+for (gender in c("Male", "Female")) {
+  # Subset the data for this gender group
+  gender_data <- ds[ds$Gender == gender, ]
+  
+  # list to store proportions for this gender
+  gender_proportions <- list()
+  
+  # Loop through each column
+  for (column in c("Annual_meetings", "Mentorship_program", "Access_resources", "Educational_workshops", "Industry_policy_insights", "Networking_opportunities", "News_updates", "Marketing_social")) {
+    # Calculate the proportion of each category for this column
+    prop_very_satisfied <- mean(gender_data[[column]] == "Very satisfied") * 100
+    prop_satisfied <- mean(gender_data[[column]] == "Satisfied") * 100
+    prop_unsatisfied <- mean(gender_data[[column]] == "Unsatisfied") * 100
+    prop_very_unsatisfied <- mean(gender_data[[column]] == "Very unsatisfied") * 100
+    prop_neutral <- mean(gender_data[[column]] == "Neutral") * 100
+    prop_noexperience <- mean(gender_data[[column]] == "No prior experience") * 100
+    
+    # Store the results in the list
+    gender_proportions[[column]] <- c("Very satisfied" = prop_very_satisfied,
+                                      "Satisfied" = prop_satisfied,
+                                      "Unsatisfied" = prop_unsatisfied,
+                                      "Very unsatisfied" = prop_very_unsatisfied,
+                                      "Neutral" = prop_neutral,
+                                      "No prior expreience" = prop_noexperience)
+  }
+  
+  # Store the results for this gender
+  proportion_results[[gender]] <- gender_proportions
+}
+
+# Print the results
+print(proportion_results)
+
+  
+```
+
+
+
+
+
+
+
+
