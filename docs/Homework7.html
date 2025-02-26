@@ -10,8 +10,9 @@
 
 
 
+<meta name="date" content="2025-02-26" />
 
-<title>About This Website</title>
+<title>Homework7</title>
 
 <script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -263,12 +264,106 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">About This Website</h1>
+<h1 class="title toc-ignore">Homework7</h1>
+<h4 class="date">2025-02-26</h4>
 
 </div>
 
 
-<p>More about this website.</p>
+<p>Question 1: There are 150 observations and 5 variables in the iris
+dataset.</p>
+<pre class="r"><code>library(dplyr)
+library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────── tidyverse 1.3.2 ──
+## ✔ tibble  3.1.6     ✔ purrr   1.0.1
+## ✔ tidyr   1.1.4     ✔ stringr 1.4.0
+## ✔ readr   2.1.3     ✔ forcats 0.5.2
+## ── Conflicts ────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>iris &lt;- iris</code></pre>
+<p>Question 2: There are 56 observations and 5 variables in the iris1
+dataset.</p>
+<pre class="r"><code>iris1 &lt;- iris %&gt;% 
+  filter(Species %in% c(&quot;versicolor&quot;, &quot;virginica&quot;) &amp; Sepal.Length &gt; 6 &amp; Sepal.Width &gt; 2.5)</code></pre>
+<p>Question 3: There are 56 observations and 3 variables in the iris2
+dataset.</p>
+<pre class="r"><code>iris2 &lt;- iris1 %&gt;% 
+  select(Species, Sepal.Length, Sepal.Width)</code></pre>
+<p>Question 4:</p>
+<pre class="r"><code>iris3 &lt;- iris2 %&gt;% 
+  arrange(desc(Sepal.Length))
+
+head(iris3)</code></pre>
+<pre><code>##     Species Sepal.Length Sepal.Width
+## 1 virginica          7.9         3.8
+## 2 virginica          7.7         3.8
+## 3 virginica          7.7         2.6
+## 4 virginica          7.7         2.8
+## 5 virginica          7.7         3.0
+## 6 virginica          7.6         3.0</code></pre>
+<p>Question 5: There are 56 observations and 4 variables in the iris4
+dataset.</p>
+<pre class="r"><code>iris4 &lt;- iris3 %&gt;% 
+  mutate(Sepal.Area = (Sepal.Length*Sepal.Width))</code></pre>
+<p>Question 6:</p>
+<pre class="r"><code>iris5 &lt;- iris4 %&gt;% 
+  summarise(avgLength = mean(Sepal.Length),
+            avgWidth = mean(Sepal.Width),
+            sampleSize = n())
+
+print(iris5)</code></pre>
+<pre><code>##   avgLength avgWidth sampleSize
+## 1  6.698214 3.041071         56</code></pre>
+<p>Question 7:</p>
+<pre class="r"><code>iris6 &lt;- iris4 %&gt;% 
+  group_by(Species) %&gt;% 
+  summarise(avgLength = mean(Sepal.Length),
+            avgWidth = mean(Sepal.Width),
+            sampleSize = n())
+
+print(iris6)</code></pre>
+<pre><code>## # A tibble: 2 × 4
+##   Species    avgLength avgWidth sampleSize
+##   &lt;fct&gt;          &lt;dbl&gt;    &lt;dbl&gt;      &lt;int&gt;
+## 1 versicolor      6.48     2.99         17
+## 2 virginica       6.79     3.06         39</code></pre>
+<p>Question 8:</p>
+<pre class="r"><code>irisFinal &lt;- iris %&gt;% 
+  filter(Species %in% c(&quot;versicolor&quot;, &quot;virginica&quot;) &amp; Sepal.Length &gt; 6 &amp; Sepal.Width &gt; 2.5) %&gt;% 
+  select(Species, Sepal.Length, Sepal.Width) %&gt;% 
+  arrange(desc(Sepal.Length)) %&gt;% 
+  mutate(Sepal.Area = (Sepal.Length*Sepal.Width)) %&gt;% 
+  group_by(Species) %&gt;% 
+  summarise(avgLength = mean(Sepal.Length),
+            avgWidth = mean(Sepal.Width),
+            sampleSize = n())
+
+print(irisFinal)</code></pre>
+<pre><code>## # A tibble: 2 × 4
+##   Species    avgLength avgWidth sampleSize
+##   &lt;fct&gt;          &lt;dbl&gt;    &lt;dbl&gt;      &lt;int&gt;
+## 1 versicolor      6.48     2.99         17
+## 2 virginica       6.79     3.06         39</code></pre>
+<p>Question 9:</p>
+<pre class="r"><code>irisLong &lt;- iris %&gt;% 
+  pivot_longer(cols = 1:4, names_to= &quot;Measure&quot;, values_to= &quot;Value&quot;)
+
+print(irisLong)</code></pre>
+<pre><code>## # A tibble: 600 × 3
+##    Species Measure      Value
+##    &lt;fct&gt;   &lt;chr&gt;        &lt;dbl&gt;
+##  1 setosa  Sepal.Length   5.1
+##  2 setosa  Sepal.Width    3.5
+##  3 setosa  Petal.Length   1.4
+##  4 setosa  Petal.Width    0.2
+##  5 setosa  Sepal.Length   4.9
+##  6 setosa  Sepal.Width    3  
+##  7 setosa  Petal.Length   1.4
+##  8 setosa  Petal.Width    0.2
+##  9 setosa  Sepal.Length   4.7
+## 10 setosa  Sepal.Width    3.2
+## # … with 590 more rows</code></pre>
 
 
 

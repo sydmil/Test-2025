@@ -18,7 +18,7 @@ Question 2: There are 56 observations and 5 variables in the iris1 dataset.
 
 ```{r}
 
-iris1 <- df %>% 
+iris1 <- iris %>% 
   filter(Species %in% c("versicolor", "virginica") & Sepal.Length > 6 & Sepal.Width > 2.5)
 
 ```

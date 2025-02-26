@@ -276,7 +276,7 @@ the Vermont Beekeepers Association to better understand the social
 demographic of the organization and member satisfaction with aspects of
 the organization. We aim to better support minority demographics by
 understanding the satisfaction rating among these groups.</p>
-<pre class="r"><code>ds &lt;- read.csv(&quot;Annual Survey Results - 2025 Winter meeting.csv&quot;)
+<pre class="r"><code>ds &lt;- read.csv(&quot;Annual Survey Results - Final.csv&quot;)
 
 head(ds)</code></pre>
 <pre><code>##       Annual_meetings  Mentorship_program    Access_resources
@@ -293,47 +293,19 @@ head(ds)</code></pre>
 ## 4   No prior experience      No prior experience           Very satisfied
 ## 5        Very satisfied           Very satisfied      No prior experience
 ## 6   No prior experience      No prior experience      No prior experience
-##          News_updates    Marketing_social
-## 1           Satisfied           Satisfied
-## 2           Satisfied           Satisfied
-## 3           Satisfied           Satisfied
-## 4      Very satisfied      Very satisfied
-## 5      Very satisfied No prior experience
-## 6 No prior experience No prior experience
-##                                        Option_to_explain Speaker.Name.s..
-## 1                                                                      NA
-## 2                                                                      NA
-## 3                                                                      NA
-## 4 Cant sign onto website as a member to renew membership               NA
-## 5                                                                      NA
-## 6                                                                      NA
-##                    Topic.s..           Speaker.Category
-## 1                                                      
-## 2                                                      
-## 3                                                      
-## 4 Types of hives pros &amp; cons Hive management techniques
-## 5                                                      
-## 6                                                      
-##                        Workshop.Topic.s..
-## 1                                        
-## 2                                        
-## 3          Making nucs, overwinter splits
-## 4              Types of hives pros &amp; cons
-## 5 Beginner beekeeping, treating for mites
-## 6                   First time beekeeping
-##                                  Workshop.Category   Age Gender  Race
-## 1                                                  55-64   Male White
-## 2                                                  35-54   Male White
-## 3 Preparing for winter, Hive management techniques   65+   Male White
-## 4                       Hive management techniques 55-64   Male White
-## 5                              Pests and pathogens   65+ Female White
-## 6                       Hive management techniques                   
-##            Location                                 Scale Beekeeping_experience
-## 1  Southern Vermont    Hobbyist Beekeeper (&lt;25 colonies)                    10+
-## 2 Northwest Vermont    Hobbyist Beekeeper (&lt;25 colonies)                    4-6
-## 3   Western Vermont    Hobbyist Beekeeper (&lt;25 colonies)                    4-6
-## 4             Other Sideliner Beekeeper (25-300 colonies)                   4-6
-## 5   Central Vermont    Hobbyist Beekeeper (&lt;25 colonies)                    0-3
+##          News_updates    Marketing_social   Age Gender  Race          Location
+## 1           Satisfied           Satisfied 55-64   Male White  Southern Vermont
+## 2           Satisfied           Satisfied 35-54   Male White Northwest Vermont
+## 3           Satisfied           Satisfied   65+   Male White   Western Vermont
+## 4      Very satisfied      Very satisfied 55-64   Male White             Other
+## 5      Very satisfied No prior experience   65+ Female White   Central Vermont
+## 6 No prior experience No prior experience                                     
+##                                   Scale Beekeeping_experience
+## 1    Hobbyist Beekeeper (&lt;25 colonies)                    10+
+## 2    Hobbyist Beekeeper (&lt;25 colonies)                    4-6
+## 3    Hobbyist Beekeeper (&lt;25 colonies)                    4-6
+## 4 Sideliner Beekeeper (25-300 colonies)                   4-6
+## 5    Hobbyist Beekeeper (&lt;25 colonies)                    0-3
 ## 6</code></pre>
 <p>Question 4 &amp; 5: Analyzing the data multiple times/ Graphing the
 data</p>
@@ -367,23 +339,27 @@ print(chi_squared_test)</code></pre>
 ##  Pearson&#39;s Chi-squared test
 ## 
 ## data:  contingency_table
-## X-squared = 6.3283, df = 2, p-value = 0.04225</code></pre>
+## X-squared = 3.6684, df = 4, p-value = 0.4527</code></pre>
 <pre class="r"><code># Get the standardized residuals
 standardized_residuals &lt;- chi_squared_test$stdres
 
 #Priint residuals
 print(standardized_residuals)</code></pre>
-<pre><code>##         
-##            Satisfied Unsatisfied
-##          -2.36098808  2.36098808
-##   Female  0.08511831 -0.08511831
-##   Male    2.06772205 -2.06772205</code></pre>
+<pre><code>##                       
+##                          Satisfied Unsatisfied
+##                         1.67242463 -1.67242463
+##   Female               -1.13158641  1.13158641
+##   Male                 -0.46966822  0.46966822
+##   Non-binary            0.60485838 -0.60485838
+##   Prefer not to answer  0.07630846 -0.07630846</code></pre>
 <pre class="r"><code>print(contingency_table)</code></pre>
-<pre><code>##         
-##          Satisfied Unsatisfied
-##                  7           5
-##   Female         9           2
-##   Male          18           1</code></pre>
+<pre><code>##                       
+##                        Satisfied Unsatisfied
+##                               28           5
+##   Female                      28          14
+##   Male                        61          24
+##   Non-binary                   1           0
+##   Prefer not to answer         3           1</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Are beekeepers with more years of beekeeping experience more likely
 to be satisfied with networking activities?</li>
@@ -395,13 +371,14 @@ ds$Networking_opportunitiesClean &lt;- ifelse(ds$Networking_opportunities %in% c
 contingency_table2 &lt;- table(ds$Beekeeping_experience, ds$Networking_opportunitiesClean)
 
 print(contingency_table2)</code></pre>
-<pre><code>##       
-##        Satisfied Unsatisfied
-##                9           3
-##   0-3          7           1
-##   10+          6           1
-##   4-6         10           1
-##   7-10         4           0</code></pre>
+<pre><code>##                       
+##                        Satisfied Unsatisfied
+##                               28           4
+##   0-3                         23           7
+##   10+                         38           9
+##   4-6                         20          14
+##   7-10                        17           2
+##   Prefer not to answer         1           2</code></pre>
 <pre class="r"><code># Perform the Chi-squared test
 chi_squared_test2 &lt;- chisq.test(contingency_table2)</code></pre>
 <pre><code>## Warning in chisq.test(contingency_table2): Chi-squared approximation may be
@@ -412,19 +389,20 @@ print(chi_squared_test2)</code></pre>
 ##  Pearson&#39;s Chi-squared test
 ## 
 ## data:  contingency_table2
-## X-squared = 2.0549, df = 4, p-value = 0.7257</code></pre>
+## X-squared = 13.617, df = 5, p-value = 0.01823</code></pre>
 <pre class="r"><code># Get the standardized residuals
 standardized_residuals2 &lt;- chi_squared_test2$stdres
 
 #Priint residuals
 print(standardized_residuals2)</code></pre>
-<pre><code>##       
-##         Satisfied Unsatisfied
-##        -1.2549900   1.2549900
-##   0-3   0.1604222  -0.1604222
-##   10+   0.0000000   0.0000000
-##   4-6   0.5731019  -0.5731019
-##   7-10  0.8583951  -0.8583951</code></pre>
+<pre><code>##                       
+##                          Satisfied Unsatisfied
+##                         1.57587692 -1.57587692
+##   0-3                  -0.04358249  0.04358249
+##   10+                   0.74735144 -0.74735144
+##   4-6                  -2.82046675  2.82046675
+##   7-10                  1.37619873 -1.37619873
+##   Prefer not to answer -1.81169018  1.81169018</code></pre>
 <p>Question 6-9: For loops</p>
 <pre class="r"><code>library(dplyr)</code></pre>
 <pre><code>## 
@@ -474,101 +452,101 @@ print(proportion_results)</code></pre>
 <pre><code>## $Male
 ## $Male$Annual_meetings
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           36.842105           31.578947            0.000000            0.000000 
+##            9.411765           28.235294            1.176471            0.000000 
 ##             Neutral No prior expreience 
-##            5.263158           26.315789 
+##           18.823529           25.882353 
 ## 
 ## $Male$Mentorship_program
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           15.789474            5.263158            5.263158            0.000000 
+##            4.705882           10.588235            7.058824            0.000000 
 ##             Neutral No prior expreience 
-##            0.000000           63.157895 
+##           17.647059           47.058824 
 ## 
 ## $Male$Access_resources
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           31.578947           36.842105            0.000000            0.000000 
+##           10.588235           34.117647            1.176471            1.176471 
 ##             Neutral No prior expreience 
-##            5.263158           21.052632 
+##           14.117647           18.823529 
 ## 
 ## $Male$Educational_workshops
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           52.631579           21.052632            0.000000            0.000000 
+##           16.470588           25.882353            1.176471            1.176471 
 ##             Neutral No prior expreience 
-##            5.263158           15.789474 
+##            9.411765           11.764706 
 ## 
 ## $Male$Industry_policy_insights
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##            42.10526            26.31579             0.00000             0.00000 
+##           14.117647           22.352941            0.000000            1.176471 
 ##             Neutral No prior expreience 
-##            10.52632            15.78947 
+##           18.823529           17.647059 
 ## 
 ## $Male$Networking_opportunities
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           47.368421           26.315789            0.000000            0.000000 
+##           11.764706           35.294118            1.176471            0.000000 
 ##             Neutral No prior expreience 
-##            5.263158           15.789474 
+##           16.470588           16.470588 
 ## 
 ## $Male$News_updates
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##            31.57895            47.36842             0.00000             0.00000 
+##            9.411765           40.000000            1.176471            0.000000 
 ##             Neutral No prior expreience 
-##             0.00000            15.78947 
+##            9.411765            9.411765 
 ## 
 ## $Male$Marketing_social
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##            31.57895            36.84211             0.00000             0.00000 
+##            8.235294           28.235294            0.000000            0.000000 
 ##             Neutral No prior expreience 
-##            15.78947            10.52632 
+##           25.882353           21.176471 
 ## 
 ## 
 ## $Female
 ## $Female$Annual_meetings
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##            9.090909           27.272727            0.000000            0.000000 
+##            7.142857           40.476190            0.000000            0.000000 
 ##             Neutral No prior expreience 
-##            9.090909           45.454545 
+##           14.285714           26.190476 
 ## 
 ## $Female$Mentorship_program
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           27.272727            0.000000            9.090909            9.090909 
+##            7.142857            7.142857            9.523810            4.761905 
 ##             Neutral No prior expreience 
-##            9.090909           27.272727 
+##           21.428571           38.095238 
 ## 
 ## $Female$Access_resources
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           27.272727           36.363636            0.000000            9.090909 
+##           16.666667           28.571429            0.000000            2.380952 
 ##             Neutral No prior expreience 
-##            9.090909            9.090909 
+##           11.904762            9.523810 
 ## 
 ## $Female$Educational_workshops
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           54.545455           27.272727            0.000000            9.090909 
+##           21.428571           30.952381            7.142857            2.380952 
 ##             Neutral No prior expreience 
-##            0.000000            0.000000 
+##            4.761905            4.761905 
 ## 
 ## $Female$Industry_policy_insights
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           36.363636            0.000000            0.000000            9.090909 
+##           16.666667            9.523810            0.000000            2.380952 
 ##             Neutral No prior expreience 
-##           18.181818           18.181818 
+##           19.047619           19.047619 
 ## 
 ## $Female$Networking_opportunities
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           27.272727           18.181818            9.090909            9.090909 
+##           16.666667           11.904762            9.523810            2.380952 
 ##             Neutral No prior expreience 
-##            9.090909            9.090909 
+##           19.047619           14.285714 
 ## 
 ## $Female$News_updates
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           63.636364            0.000000            9.090909            9.090909 
+##           26.190476           16.666667            4.761905            2.380952 
 ##             Neutral No prior expreience 
-##            0.000000            0.000000 
+##           11.904762            7.142857 
 ## 
 ## $Female$Marketing_social
 ##      Very satisfied           Satisfied         Unsatisfied    Very unsatisfied 
-##           27.272727           18.181818            0.000000            9.090909 
+##           11.904762           16.666667            0.000000            2.380952 
 ##             Neutral No prior expreience 
-##           18.181818           18.181818</code></pre>
+##           23.809524           23.809524</code></pre>
 
 
 
