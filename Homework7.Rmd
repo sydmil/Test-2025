@@ -1,0 +1,122 @@
+---
+title: "Homework7"
+output: html_document
+date: '2025-02-26'
+---
+
+Question 1: There are 150 observations and 5 variables in the iris dataset.
+
+```{r}
+library(dplyr)
+library(tidyverse)
+
+iris <- iris
+
+```
+
+Question 2: There are 56 observations and 5 variables in the iris1 dataset. 
+
+```{r}
+
+iris1 <- df %>% 
+  filter(Species %in% c("versicolor", "virginica") & Sepal.Length > 6 & Sepal.Width > 2.5)
+
+```
+
+Question 3: There are 56 observations and 3 variables in the iris2 dataset. 
+
+```{r}
+
+iris2 <- iris1 %>% 
+  select(Species, Sepal.Length, Sepal.Width)
+
+```
+
+Question 4: 
+
+```{r}
+
+iris3 <- iris2 %>% 
+  arrange(desc(Sepal.Length))
+
+head(iris3)
+
+```
+
+Question 5: There are 56 observations and 4 variables in the iris4 dataset. 
+
+```{r}
+
+iris4 <- iris3 %>% 
+  mutate(Sepal.Area = (Sepal.Length*Sepal.Width))
+
+```
+
+Question 6:
+
+```{r}
+
+iris5 <- iris4 %>% 
+  summarise(avgLength = mean(Sepal.Length),
+            avgWidth = mean(Sepal.Width),
+            sampleSize = n())
+
+print(iris5)
+
+```
+
+Question 7:
+
+```{r}
+
+iris6 <- iris4 %>% 
+  group_by(Species) %>% 
+  summarise(avgLength = mean(Sepal.Length),
+            avgWidth = mean(Sepal.Width),
+            sampleSize = n())
+
+print(iris6)
+
+```
+
+Question 8:
+
+```{r}
+
+irisFinal <- iris %>% 
+  filter(Species %in% c("versicolor", "virginica") & Sepal.Length > 6 & Sepal.Width > 2.5) %>% 
+  select(Species, Sepal.Length, Sepal.Width) %>% 
+  arrange(desc(Sepal.Length)) %>% 
+  mutate(Sepal.Area = (Sepal.Length*Sepal.Width)) %>% 
+  group_by(Species) %>% 
+  summarise(avgLength = mean(Sepal.Length),
+            avgWidth = mean(Sepal.Width),
+            sampleSize = n())
+
+print(irisFinal)
+
+```
+
+Question 9:
+
+```{r}
+
+irisLong <- iris %>% 
+  pivot_longer(cols = 1:4, names_to= "Measure", values_to= "Value")
+
+print(irisLong)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
