@@ -13,6 +13,7 @@ library(dplyr)
 ```
 
 
+
 Question 1-2:
 
 Read in fake data vector:
