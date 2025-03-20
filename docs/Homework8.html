@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2025-03-19" />
+
+<title>Homework8</title>
+
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="homework_links.html">Homeworks</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Homework8</h1>
+<h4 class="date">2025-03-19</h4>
+
+</div>
+
+
+<pre class="r"><code>library(ggplot2) # for graphics
+library(MASS) # for maximum likelihood estimation</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<pre class="r"><code>library(dplyr)</code></pre>
+<p>Question 1-2:</p>
+<p>Read in fake data vector:</p>
+<pre class="r"><code># quick and dirty, a truncated normal distribution to work on the solution set
+
+#z &lt;- rnorm(n=3000,mean=0.2)
+#z &lt;- data.frame(1:3000,z)
+#names(z) &lt;- list(&quot;ID&quot;,&quot;myVar&quot;)
+#z &lt;- z[z$myVar&gt;0,]
+#str(z)
+
+#summary(z$myVar)</code></pre>
+<p>Read in our own data set:</p>
+<pre class="r"><code>z &lt;- read.csv(&quot;UBO Data - Sheet7.csv&quot;,header=TRUE,sep=&quot;,&quot;)
+
+z &lt;- z %&gt;% 
+  dplyr::select(field_ID, assay_score) %&gt;% 
+  filter(!is.na(assay_score))%&gt;% 
+  mutate(Var = ifelse(assay_score == 0, 0.0001, assay_score))
+
+colnames(z) &lt;- c(&quot;ID&quot;, &quot;Var&quot;, &quot;myVar&quot;)
+
+str(z)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    511 obs. of  3 variables:
+##  $ ID   : chr  &quot;Latshaw G17 II&quot; &quot;#28 52 &quot; &quot;G17&quot; &quot;Breeder &#39;21 S2-24&quot; ...
+##  $ Var  : num  0 0 0 0.2 0.85 0.22 0.82 0.19 0.95 0.19 ...
+##  $ myVar: num  0.0001 0.0001 0.0001 0.2 0.85 0.22 0.82 0.19 0.95 0.19 ...</code></pre>
+<pre class="r"><code>summary(z)</code></pre>
+<pre><code>##       ID                 Var             myVar        
+##  Length:511         Min.   :0.0000   Min.   :0.00010  
+##  Class :character   1st Qu.:0.0100   1st Qu.:0.01005  
+##  Mode  :character   Median :0.0800   Median :0.08000  
+##                     Mean   :0.2336   Mean   :0.23367  
+##                     3rd Qu.:0.3450   3rd Qu.:0.34500  
+##                     Max.   :1.0000   Max.   :1.00000</code></pre>
+<p>Plot histogram of data:</p>
+<pre class="r"><code>p1 &lt;- ggplot(data=z, aes(x=myVar, y=..density..)) +
+  geom_histogram(color=&quot;grey60&quot;,fill=&quot;cornsilk&quot;,size=0.2) 
+print(p1)</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="Homework8_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Add empirical density curve:</p>
+<pre class="r"><code>p1 &lt;-  p1 +  geom_density(linetype=&quot;dotted&quot;,size=0.75)
+print(p1)</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="Homework8_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Get maximum likelihood parameters for normal</p>
+<pre class="r"><code>normPars &lt;- fitdistr(z$myVar,&quot;normal&quot;)
+print(normPars)</code></pre>
+<pre><code>##       mean           sd     
+##   0.233664971   0.297085812 
+##  (0.013142303) (0.009293011)</code></pre>
+<pre class="r"><code>str(normPars)</code></pre>
+<pre><code>## List of 5
+##  $ estimate: Named num [1:2] 0.234 0.297
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;mean&quot; &quot;sd&quot;
+##  $ sd      : Named num [1:2] 0.01314 0.00929
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;mean&quot; &quot;sd&quot;
+##  $ vcov    : num [1:2, 1:2] 1.73e-04 0.00 0.00 8.64e-05
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : chr [1:2] &quot;mean&quot; &quot;sd&quot;
+##   .. ..$ : chr [1:2] &quot;mean&quot; &quot;sd&quot;
+##  $ n       : int 511
+##  $ loglik  : num -105
+##  - attr(*, &quot;class&quot;)= chr &quot;fitdistr&quot;</code></pre>
+<pre class="r"><code>normPars$estimate[&quot;mean&quot;] # note structure of getting a named attribute</code></pre>
+<pre><code>##     mean 
+## 0.233665</code></pre>
+<p>Plot normal probability density:</p>
+<pre class="r"><code>meanML &lt;- normPars$estimate[&quot;mean&quot;]
+sdML &lt;- normPars$estimate[&quot;sd&quot;]
+
+xval &lt;- seq(0,max(z$myVar),len=length(z$myVar))
+
+ stat &lt;- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour=&quot;red&quot;, n = length(z$myVar), args = list(mean = meanML, sd = sdML))
+ p1 + stat</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="Homework8_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Plot exponential probability density:</p>
+<pre class="r"><code>expoPars &lt;- fitdistr(z$myVar,&quot;exponential&quot;)
+rateML &lt;- expoPars$estimate[&quot;rate&quot;]
+
+stat2 &lt;- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour=&quot;blue&quot;, n = length(z$myVar), args = list(rate=rateML))
+ p1 + stat + stat2</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="Homework8_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Plot uniform probability density:</p>
+<pre class="r"><code>stat3 &lt;- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour=&quot;darkgreen&quot;, n = length(z$myVar), args = list(min=min(z$myVar), max=max(z$myVar)))
+ p1 + stat + stat2 + stat3</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="Homework8_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Plot gamma probability density:</p>
+<pre class="r"><code>gammaPars &lt;- fitdistr(z$myVar,&quot;gamma&quot;)</code></pre>
+<pre><code>## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced</code></pre>
+<pre class="r"><code>shapeML &lt;- gammaPars$estimate[&quot;shape&quot;]
+rateML &lt;- gammaPars$estimate[&quot;rate&quot;]
+
+stat4 &lt;- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour=&quot;brown&quot;, n = length(z$myVar), args = list(shape=shapeML, rate=rateML))
+ p1 + stat + stat2 + stat3 + stat4</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="Homework8_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Plot beta probability density:</p>
+<pre class="r"><code>pSpecial &lt;- ggplot(data=z, aes(x=myVar/(max(myVar + 0.1)), y=..density..)) +
+  geom_histogram(color=&quot;grey60&quot;,fill=&quot;cornsilk&quot;,size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype=&quot;dotted&quot;)
+
+betaPars &lt;- fitdistr(x=z$myVar/max(z$myVar + 0.1),start=list(shape1=1,shape2=2),&quot;beta&quot;)</code></pre>
+<pre><code>## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced</code></pre>
+<pre class="r"><code>shape1ML &lt;- betaPars$estimate[&quot;shape1&quot;]
+shape2ML &lt;- betaPars$estimate[&quot;shape2&quot;]
+
+statSpecial &lt;- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour=&quot;orchid&quot;, n = length(z$myVar), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<p><img src="Homework8_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Question 3:</p>
+<p>How do the two histogram profiles compare? Do you think the model is
+doing a good job of simulating realistic data that match your original
+measurements? Why or why not?</p>
+<p>We modified our own data set to have the variables ‘ID’ ‘myVar’, so
+we did not have to comment out all of code from the fake data set. Our
+data set represents over 500 hygienic behavior tests conducted on
+Vermont honey bee colonies between 2022-2024. Test scores range from 0
+to 1 and represent the proportion of infected larvae removed within a 2
+hr period.</p>
+<p>The histogram of our own data set differs from the fake data set due
+to its dramatic right-skewed shape, where most colonies scored 0 and the
+mean score was 0.23. The probability density that best fits our data set
+upon first glance would be the exponential or gamma distributions.
+However, upon simulating the data sets from both densities below and
+comparing with our original data set, it looks like the exponential
+density fits much better since the shape of the exponential distribution
+is right-skewed with a long tail.</p>
+<p>Question 4:</p>
+<pre class="r"><code>gammaPars &lt;- fitdistr(z$myVar, &quot;gamma&quot;)</code></pre>
+<pre><code>## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+
+## Warning in densfun(x, parm[1], parm[2], ...): NaNs produced</code></pre>
+<pre class="r"><code># Extract the shape and rate parameters from the fit
+shapeML &lt;- gammaPars$estimate[&quot;shape&quot;]
+rateML &lt;- gammaPars$estimate[&quot;rate&quot;]
+
+# Simulate a new dataset with the same length as your original data using the fitted parameters
+simulated_data &lt;- rgamma(length(z$myVar), shape = shapeML, rate = rateML)
+
+# Create the original data histogram with probability density curve
+p3 &lt;- ggplot(data = data.frame(x = z$myVar), aes(x = x)) + 
+  geom_histogram(aes(y = ..density..), bins = 30, fill = &quot;skyblue&quot;, color = &quot;black&quot;) + 
+  stat_function(aes(x = x, y = ..y..), fun = dgamma, args = list(shape = shapeML, rate = rateML), 
+                colour = &quot;brown&quot;, size = 1) + 
+  labs(title = &quot;Original Data with Gamma Density Curve&quot;, x = &quot;myVar&quot;, y = &quot;Density&quot;) +
+  theme_minimal()
+
+# Create the simulated data histogram with probability density curve
+p4 &lt;- ggplot(data = data.frame(x = simulated_data), aes(x = x)) + 
+  geom_histogram(aes(y = ..density..), bins = 30, fill = &quot;lightgreen&quot;, color = &quot;black&quot;) + 
+  stat_function(aes(x = x, y = ..y..), fun = dgamma, args = list(shape = shapeML, rate = rateML), 
+                colour = &quot;brown&quot;, size = 1) + 
+  labs(title = &quot;Simulated Data with Gamma Density Curve&quot;, x = &quot;Simulated myVar&quot;, y = &quot;Density&quot;) +
+  theme_minimal()
+
+# Display both plots
+p3</code></pre>
+<p><img src="Homework8_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>p4</code></pre>
+<p><img src="Homework8_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<pre class="r"><code>expoPars &lt;- fitdistr(z$myVar, &quot;exponential&quot;)
+
+# Extract the rate parameter from the fit
+rateML &lt;- expoPars$estimate[&quot;rate&quot;]
+
+# Simulate a new dataset with the same length as your original data using the fitted rate
+simulated_data_exp &lt;- rexp(length(z$myVar), rate = rateML)
+
+# Create the original data histogram with the exponential density curve
+p5 &lt;- ggplot(data = data.frame(x = z$myVar), aes(x = x)) + 
+  geom_histogram(aes(y = ..density..), bins = 30, fill = &quot;skyblue&quot;, color = &quot;black&quot;) + 
+  stat_function(aes(x = x, y = ..y..), fun = dexp, args = list(rate = rateML), 
+                colour = &quot;blue&quot;, size = 1) + 
+  labs(title = &quot;Original Data with Exponential Density Curve&quot;, x = &quot;myVar&quot;, y = &quot;Density&quot;) +
+  theme_minimal()
+
+# Create the simulated data histogram with the exponential density curve
+p6 &lt;- ggplot(data = data.frame(x = simulated_data_exp), aes(x = x)) + 
+  geom_histogram(aes(y = ..density..), bins = 30, fill = &quot;lightgreen&quot;, color = &quot;black&quot;) + 
+  stat_function(aes(x = x, y = ..y..), fun = dexp, args = list(rate = rateML), 
+                colour = &quot;blue&quot;, size = 1) + 
+  labs(title = &quot;Simulated Data with Exponential Density Curve&quot;, x = &quot;Simulated myVar&quot;, y = &quot;Density&quot;) +
+  theme_minimal()
+
+# Display both plots
+p5</code></pre>
+<p><img src="Homework8_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<pre class="r"><code>p6</code></pre>
+<p><img src="Homework8_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

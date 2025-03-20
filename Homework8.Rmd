@@ -1,0 +1,226 @@
+---
+title: "Homework8"
+output: html_document
+date: '2025-03-19'
+---
+
+```{r}
+
+library(ggplot2) # for graphics
+library(MASS) # for maximum likelihood estimation
+library(dplyr)
+
+```
+
+
+Question 1-2:
+
+Read in fake data vector:
+
+```{r}
+
+# quick and dirty, a truncated normal distribution to work on the solution set
+
+#z <- rnorm(n=3000,mean=0.2)
+#z <- data.frame(1:3000,z)
+#names(z) <- list("ID","myVar")
+#z <- z[z$myVar>0,]
+#str(z)
+
+#summary(z$myVar)
+
+```
+
+
+
+Read in our own data set:
+```{r}
+
+z <- read.csv("UBO Data - Sheet7.csv",header=TRUE,sep=",")
+
+z <- z %>% 
+  dplyr::select(field_ID, assay_score) %>% 
+  filter(!is.na(assay_score))%>% 
+  mutate(Var = ifelse(assay_score == 0, 0.0001, assay_score))
+
+colnames(z) <- c("ID", "Var", "myVar")
+
+str(z)
+summary(z)
+
+```
+
+
+Plot histogram of data:
+```{r}
+
+p1 <- ggplot(data=z, aes(x=myVar, y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) 
+print(p1)
+
+
+```
+
+
+Add empirical density curve:
+```{r}
+
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+print(p1)
+
+```
+
+
+Get maximum likelihood parameters for normal
+```{r}
+
+normPars <- fitdistr(z$myVar,"normal")
+print(normPars)
+str(normPars)
+normPars$estimate["mean"] # note structure of getting a named attribute
+
+```
+
+Plot normal probability density:
+```{r}
+
+meanML <- normPars$estimate["mean"]
+sdML <- normPars$estimate["sd"]
+
+xval <- seq(0,max(z$myVar),len=length(z$myVar))
+
+ stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="red", n = length(z$myVar), args = list(mean = meanML, sd = sdML))
+ p1 + stat
+
+```
+
+Plot exponential probability density:
+```{r}
+
+expoPars <- fitdistr(z$myVar,"exponential")
+rateML <- expoPars$estimate["rate"]
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="blue", n = length(z$myVar), args = list(rate=rateML))
+ p1 + stat + stat2
+
+```
+
+Plot uniform probability density:
+```{r}
+
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="darkgreen", n = length(z$myVar), args = list(min=min(z$myVar), max=max(z$myVar)))
+ p1 + stat + stat2 + stat3
+
+```
+
+
+Plot gamma probability density:
+```{r}
+
+gammaPars <- fitdistr(z$myVar,"gamma")
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="brown", n = length(z$myVar), args = list(shape=shapeML, rate=rateML))
+ p1 + stat + stat2 + stat3 + stat4
+
+```
+
+
+Plot beta probability density:
+```{r}
+
+pSpecial <- ggplot(data=z, aes(x=myVar/(max(myVar + 0.1)), y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+betaPars <- fitdistr(x=z$myVar/max(z$myVar + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"]
+shape2ML <- betaPars$estimate["shape2"]
+
+statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="orchid", n = length(z$myVar), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+
+```
+
+Question 3:
+
+How do the two histogram profiles compare? Do you think the model is doing a good job of simulating realistic data that match your original measurements? Why or why not?
+
+We modified our own data set to have the variables 'ID' 'myVar', so we did not have to comment out all of code from the fake data set. Our data set represents over 500 hygienic behavior tests conducted on Vermont honey bee colonies between 2022-2024. Test scores range from 0 to 1 and represent the proportion of infected larvae removed within a 2 hr period.
+
+The histogram of our own data set differs from the fake data set due to its dramatic right-skewed shape, where most colonies scored 0 and the mean score was 0.23. The probability density that best fits our data set upon first glance would be the exponential or gamma distributions. However, upon simulating the data sets from both densities below and comparing with our original data set, it looks like the exponential density fits much better since the shape of the exponential distribution is right-skewed with a long tail.
+
+
+Question 4:
+```{r}
+
+gammaPars <- fitdistr(z$myVar, "gamma")
+
+# Extract the shape and rate parameters from the fit
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+# Simulate a new dataset with the same length as your original data using the fitted parameters
+simulated_data <- rgamma(length(z$myVar), shape = shapeML, rate = rateML)
+
+# Create the original data histogram with probability density curve
+p3 <- ggplot(data = data.frame(x = z$myVar), aes(x = x)) + 
+  geom_histogram(aes(y = ..density..), bins = 30, fill = "skyblue", color = "black") + 
+  stat_function(aes(x = x, y = ..y..), fun = dgamma, args = list(shape = shapeML, rate = rateML), 
+                colour = "brown", size = 1) + 
+  labs(title = "Original Data with Gamma Density Curve", x = "myVar", y = "Density") +
+  theme_minimal()
+
+# Create the simulated data histogram with probability density curve
+p4 <- ggplot(data = data.frame(x = simulated_data), aes(x = x)) + 
+  geom_histogram(aes(y = ..density..), bins = 30, fill = "lightgreen", color = "black") + 
+  stat_function(aes(x = x, y = ..y..), fun = dgamma, args = list(shape = shapeML, rate = rateML), 
+                colour = "brown", size = 1) + 
+  labs(title = "Simulated Data with Gamma Density Curve", x = "Simulated myVar", y = "Density") +
+  theme_minimal()
+
+# Display both plots
+p3
+p4
+
+```
+
+
+
+```{r}
+
+expoPars <- fitdistr(z$myVar, "exponential")
+
+# Extract the rate parameter from the fit
+rateML <- expoPars$estimate["rate"]
+
+# Simulate a new dataset with the same length as your original data using the fitted rate
+simulated_data_exp <- rexp(length(z$myVar), rate = rateML)
+
+# Create the original data histogram with the exponential density curve
+p5 <- ggplot(data = data.frame(x = z$myVar), aes(x = x)) + 
+  geom_histogram(aes(y = ..density..), bins = 30, fill = "skyblue", color = "black") + 
+  stat_function(aes(x = x, y = ..y..), fun = dexp, args = list(rate = rateML), 
+                colour = "blue", size = 1) + 
+  labs(title = "Original Data with Exponential Density Curve", x = "myVar", y = "Density") +
+  theme_minimal()
+
+# Create the simulated data histogram with the exponential density curve
+p6 <- ggplot(data = data.frame(x = simulated_data_exp), aes(x = x)) + 
+  geom_histogram(aes(y = ..density..), bins = 30, fill = "lightgreen", color = "black") + 
+  stat_function(aes(x = x, y = ..y..), fun = dexp, args = list(rate = rateML), 
+                colour = "blue", size = 1) + 
+  labs(title = "Simulated Data with Exponential Density Curve", x = "Simulated myVar", y = "Density") +
+  theme_minimal()
+
+# Display both plots
+p5
+p6
+
+```
+
+
+
+
