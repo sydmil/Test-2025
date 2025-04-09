@@ -89,5 +89,43 @@ print(m)
 
 
 
+## 3/20/25
+
+# Load libraries ----
+library(devtools)
+library(pracma)
+library(pryr)
+install_github("ngotelli/upscaler")
+help(package="upscaler")
+
+
+##subheader A ----
+
+library(package)
+add_folder()
+add_folder(c("specialfolder1", "specialfolder2"))
+
+
+x <- runif(10)
+
+saveRDS(object=x,
+        file="DataObjects/x.rds")
+restored_x <- readRDS(file="DataObjects/x.rds")
+
+
+devtools::install_github("wilkelab/cowplot")
+install.packages("colorspace", repos = "http://R-Forge.R-project.org")
+devtools::install_github("clauswilke/colorblindr")
+
+
+
+
+
+
+
+
+
+
+
 
 

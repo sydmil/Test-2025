@@ -1,0 +1,124 @@
+---
+title: "Homework10"
+output: html_document
+date: '2025-04-09'
+---
+
+```{r}
+
+#Load in data
+
+install.packages("tidytuesdayR")
+install.packages("readr")
+install.packages("bit")
+install.packages("vcd")
+install.packages("grid")
+install.packages("ggmosaic")
+install.packages("waffle")
+install.packages("ggridges")
+install.packages("ggbeeswarm")
+
+library(ggplot2)
+library(vcd)
+library(grid)
+library(ggmosaic)
+library(tidyr)
+library(dplyr)
+
+
+palmtrees <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-18/palmtrees.csv')
+
+
+```
+
+```{r}
+
+# Mosaic plot
+ggplot(data = palmtrees) +
+  geom_mosaic(aes(x = product(climbing), fill = climbing, conds = product(erect))) +
+  labs(
+    title = 'Palm Tree Growth vs Movement Styles',
+    x = "Growth Style",
+    y = "Movement Style"
+  ) +
+  scale_fill_manual(
+    name = 'Movement Style',
+    values = c('both' = '#4db6ac', 'climbing' = '#ff6f61', 'non-climbing' = '#ffb74d'),
+    labels = c('both' = 'Both', 'climbing' = 'Climbers', 'non-climbing' = 'Non-climbers')
+  ) +
+  theme_classic()
+
+
+
+```
+
+
+```{r}
+
+#Waffle Plot
+
+freq_table <- as.data.frame(table(subfamily=palmtrees$palm_subfamily))
+
+custom_colors <- c("Arecoideae" = "#FF6F61",  
+                   "Calamoideae" = "#4DB6AC",   
+                   "Ceroxyloideae" = "#8E44AD",
+                   "Coryphoideae" = "#3E6C88",
+                   "Nypoideae" = "#FFB74D")  
+
+# Create the waffle plot
+ggplot(data = freq_table) +
+  aes(fill = subfamily, values = Freq) +
+  waffle::geom_waffle(n_rows = 30, size = 0.33, colour = "white") + 
+  coord_equal() +
+  scale_fill_manual(values = custom_colors) +  # Apply custom colors
+  theme_void() +
+  labs(title = "Palm Subfamilies") +
+  guides(fill = guide_legend(title = "Palm Subfamily"))
+
+
+```
+
+
+```{r}
+
+#Ridgeline Plot
+
+palmtrees_fil <- palmtrees %>% dplyr::filter(!is.na(palmtrees$fruit_shape))
+
+ggplot(data = palmtrees_fil) +
+  aes(x=average_fruit_length_cm,y=fruit_shape,fill=fruit_shape) + 
+  ggridges::geom_density_ridges() +
+  labs(
+    title = 'Average Palm Fruit Length by Shape',
+    x = "Average Fruit Length (cm)",
+    y = "Fruit Shape"
+  ) +
+    guides(fill = guide_legend(title = "Fruit Shape")) +
+  ggridges::theme_ridges() +
+  scale_x_continuous(limits = c(0, 10))
+
+
+```
+
+
+```{r}
+
+#Beeswarm Plot
+
+palmtrees_filtered <- palmtrees_fil %>% 
+  filter(!is.na(palmtrees_fil$fruit_shape))
+
+palmtrees_filtered$fruit_shape <- factor(palmtrees_filtered$fruit_shape, 
+                                   levels = c("ovoid", "globose", "ellipsoid", "elongate","pyramidal", "fusiform", "rouded"))
+
+ggplot(data = palmtrees_filtered) +
+  aes(x = fruit_shape, y = average_fruit_width_cm, color = fruit_shape) + 
+  ggbeeswarm::geom_beeswarm(method = "center", size = 2) +
+  labs(title = "Palm Fruit Shape vs. Average Fruit Width",
+    x = "Fruit Shape",
+    y = "Average Fruit Width (cm)") +
+  guides(color = guide_legend(title = "Fruit Shape")) +
+  theme_classic()
+
+
+```
