@@ -302,7 +302,7 @@ install.packages(&quot;tidytuesdayR&quot;)</code></pre>
 <pre class="r"><code>install.packages(&quot;ggmosaic&quot;)</code></pre>
 <pre><code>## 
 ## The downloaded binary packages are in
-##  /var/folders/sn/blx0r77j44d3jcgszq6dw0d80000gn/T//RtmplDeHtB/downloaded_packages</code></pre>
+##  /var/folders/sn/blx0r77j44d3jcgszq6dw0d80000gn/T//RtmpQnMaMW/downloaded_packages</code></pre>
 <pre class="r"><code>install.packages(&quot;waffle&quot;)</code></pre>
 <pre><code>## 
 ##   There is a binary version available but the source version is later:
@@ -318,7 +318,7 @@ install.packages(&quot;tidytuesdayR&quot;)</code></pre>
 <pre class="r"><code>install.packages(&quot;ggbeeswarm&quot;)</code></pre>
 <pre><code>## 
 ## The downloaded binary packages are in
-##  /var/folders/sn/blx0r77j44d3jcgszq6dw0d80000gn/T//RtmplDeHtB/downloaded_packages</code></pre>
+##  /var/folders/sn/blx0r77j44d3jcgszq6dw0d80000gn/T//RtmpQnMaMW/downloaded_packages</code></pre>
 <pre class="r"><code>library(ggplot2)
 library(vcd)</code></pre>
 <pre><code>## Loading required package: grid</code></pre>
@@ -341,7 +341,7 @@ library(dplyr)</code></pre>
 ##     intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code>palmtrees &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-18/palmtrees.csv&#39;)</code></pre>
 <pre><code>## Rows: 2557 Columns: 29</code></pre>
-<pre><code>## ── Column specification ───────────────────────────────────────────────
+<pre><code>## ── Column specification ─────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (17): spec_name, acc_genus, acc_species, palm_tribe, palm_subfamily, cli...
 ## dbl (12): max_stem_height_m, max_stem_dia_cm, max_leaf_number, max__blade__l...
@@ -365,14 +365,14 @@ ggplot(data = palmtrees) +
 <pre><code>## Warning: The `scale_name` argument of `continuous_scale()` is deprecated as of
 ## ggplot2 3.5.0.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning
-## was generated.</code></pre>
-<pre><code>## Warning: The `trans` argument of `continuous_scale()` is deprecated as of
-## ggplot2 3.5.0.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<pre><code>## Warning: The `trans` argument of `continuous_scale()` is deprecated as of ggplot2
+## 3.5.0.
 ## ℹ Please use the `transform` argument instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning
-## was generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <p><img src="Homework10_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <pre class="r"><code>#Waffle Plot
 
@@ -429,13 +429,13 @@ ggplot(data = palmtrees_filtered) +
     y = &quot;Average Fruit Width (cm)&quot;) +
   guides(color = guide_legend(title = &quot;Fruit Shape&quot;)) +
   theme_classic()</code></pre>
-<pre><code>## Warning: In `position_beeswarm`, method `center` discretizes the data axis
-## (a.k.a the continuous or non-grouped axis).
-## This may result in changes to the position of the points along that
-## axis, proportional to the value of `cex`.
+<pre><code>## Warning: In `position_beeswarm`, method `center` discretizes the data axis (a.k.a the
+## continuous or non-grouped axis).
+## This may result in changes to the position of the points along that axis,
+## proportional to the value of `cex`.
 ## This warning is displayed once per session.</code></pre>
-<pre><code>## Warning: Removed 371 rows containing missing values or values outside the scale
-## range (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 371 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
 <p><img src="Homework10_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 
 

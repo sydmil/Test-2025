@@ -278,31 +278,29 @@ vec &lt;- c(1:(n_dims^2))
 samp &lt;- sample(vec)
 
 m &lt;- matrix(samp, nrow = n_dims, ncol = n_dims)</code></pre>
-<pre><code>## Warning in matrix(samp, nrow = n_dims, ncol = n_dims): data length [28] is not a
-## sub-multiple or multiple of the number of rows [5]</code></pre>
+<pre><code>## Warning in matrix(samp, nrow = n_dims, ncol = n_dims): data length [19] is not a
+## sub-multiple or multiple of the number of rows [4]</code></pre>
 <pre class="r"><code>print(m)</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4] [,5]
-## [1,]   24   22   23   18    4
-## [2,]   13    1   25    5   21
-## [3,]   10   19   20    6   11
-## [4,]   16   14    3    7   26
-## [5,]    2    8    9   27   17</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]   18   14    8    9
+## [2,]   17   13    7   10
+## [3,]   16    1   12    2
+## [4,]    4   19    5    6</code></pre>
 <pre class="r"><code>trans_m &lt;- t(m)
 print(trans_m)</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4] [,5]
-## [1,]   24   13   10   16    2
-## [2,]   22    1   19   14    8
-## [3,]   23   25   20    3    9
-## [4,]   18    5    6    7   27
-## [5,]    4   21   11   26   17</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]   18   17   16    4
+## [2,]   14   13    1   19
+## [3,]    8    7   12    5
+## [4,]    9   10    2    6</code></pre>
 <pre class="r"><code>sum(trans_m[1,])</code></pre>
-<pre><code>## [1] 65</code></pre>
+<pre><code>## [1] 55</code></pre>
 <pre class="r"><code>mean(trans_m[1,])</code></pre>
-<pre><code>## [1] 13</code></pre>
+<pre><code>## [1] 13.75</code></pre>
 <pre class="r"><code>sum(trans_m[n_dims,])</code></pre>
-<pre><code>## [1] 79</code></pre>
+<pre><code>## [1] 27</code></pre>
 <pre class="r"><code>mean(trans_m[n_dims,])</code></pre>
-<pre><code>## [1] 15.8</code></pre>
+<pre><code>## [1] 6.75</code></pre>
 <pre class="r"><code>eigen &lt;- eigen(trans_m)
 
 typeof(eigen)</code></pre>
@@ -316,8 +314,8 @@ my_logical &lt;- r_num2&lt;50
 
 my_letters &lt;- sample(letters, length(letters))
 print(my_letters)</code></pre>
-<pre><code>##  [1] &quot;j&quot; &quot;q&quot; &quot;k&quot; &quot;i&quot; &quot;u&quot; &quot;m&quot; &quot;t&quot; &quot;w&quot; &quot;e&quot; &quot;n&quot; &quot;x&quot; &quot;s&quot; &quot;a&quot; &quot;f&quot; &quot;l&quot; &quot;r&quot; &quot;c&quot; &quot;p&quot; &quot;d&quot;
-## [20] &quot;z&quot; &quot;y&quot; &quot;o&quot; &quot;g&quot; &quot;h&quot; &quot;v&quot; &quot;b&quot;</code></pre>
+<pre><code>##  [1] &quot;l&quot; &quot;c&quot; &quot;o&quot; &quot;s&quot; &quot;p&quot; &quot;e&quot; &quot;y&quot; &quot;d&quot; &quot;f&quot; &quot;g&quot; &quot;j&quot; &quot;m&quot; &quot;b&quot; &quot;v&quot; &quot;t&quot; &quot;z&quot; &quot;k&quot; &quot;r&quot; &quot;x&quot;
+## [20] &quot;n&quot; &quot;q&quot; &quot;a&quot; &quot;w&quot; &quot;u&quot; &quot;h&quot; &quot;i&quot;</code></pre>
 <pre class="r"><code>my_list &lt;- list(my_matrix,my_logical, my_letters)
 
 my_list2 &lt;- list(my_matrix[2,2], my_logical[2], my_letters[2])
@@ -338,13 +336,13 @@ df[sample(nrow(df), 4), &quot;my_unis&quot;] &lt;- NA
 
 #for the first variable, write a single line of R code to identify which rows have the missing values.
 which(!complete.cases(df$my_unis))</code></pre>
-<pre><code>## [1]  5  9 17 19</code></pre>
+<pre><code>## [1]  4 16 22 25</code></pre>
 <pre class="r"><code>#re-order the entire data frame to arrange the second variable in alphabetical order          
 df &lt;- df[order(df$my_letters), ]
 
 #calculate the column mean for the first variable
 mean(df$my_unis, na.rm = T)</code></pre>
-<pre><code>## [1] 5.732943</code></pre>
+<pre><code>## [1] 4.713926</code></pre>
 
 
 

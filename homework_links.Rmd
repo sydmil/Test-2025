@@ -6,7 +6,7 @@ date: '2025-01-22'
 ---
 
 
-Week 1 Homework [HW1 Link] (HW1.html)
+Week 1 Homework [HW1 Link](HW1.html)
 
 Week 3 Homework [HW3 Link](Homework3.html)
 
@@ -20,7 +20,7 @@ Week 7 Homework [HW7 Link](Homework7.html)
 
 Week 8 Homework [HW8 Link](Homework8.html)
 
-Week 9 Homework [HW9 Link](CompBio2025.zip)
+Week 9 Homework [HW9 Link](Archive.zip)
 
 Week 10 Homework [HW10 Link](Homework10.html)
 
